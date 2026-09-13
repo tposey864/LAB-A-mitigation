@@ -1,7 +1,7 @@
 # CTF_LAB
-Upwork client ctf project
+Identify and Patch a Vulnerability
 
-# Charles
+# Description
 
 This Directory contains 2 pdf **Lab_1.pdf and Lab_2.pdf**.
 
