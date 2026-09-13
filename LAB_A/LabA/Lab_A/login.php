@@ -5,13 +5,13 @@ include 'db.php';
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-// VULNERABILITY 2: Vulnerable SQL Injection (SQLi)
-// User inputs ($username and $password) are concatenated directly into the command string.
-// A malicious actor can use payloads like "admin' #" to bypass authentication entirely.
-$sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
-$result = $conn->query($sql);
+// Use prepared statements to prevent SQL injection.
+$stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+$stmt->bind_param("ss", $username, $password);
+$stmt->execute();
+$result = $stmt->get_result();
 
-if ($result !== FALSE && $result->num_rows > 0) {
+if ($result && $result->num_rows > 0) {
     // Successful login
     $_SESSION['loggedin'] = true;
     $_SESSION['username'] = $username;
